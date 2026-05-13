@@ -24,6 +24,14 @@
 
 ---
 
+## 📊 Executive Dashboard Preview
+
+![Executive Dashboard](07_PowerBI_Dashboard/screenshots/01_Executive_Dashboard_Overview.png)
+
+> Executive-level Power BI dashboard summarizing Medicaid spending trends, reimbursement models, top drug cost drivers, and state-level spend concentration.
+
+---
+
 ## 🎯 Business Problem
 
 Medicaid managed care organizations face a critical visibility gap: pharmaceutical spending continues to rise year-over-year, yet most payer analytics teams lack the structured infrastructure to understand what is actually driving those costs.
@@ -319,7 +327,7 @@ medicaid-drug-spend-intelligence/
 
 > Raw data files are not included in this repository.
 > All datasets are publicly available and can be downloaded directly from Medicaid.gov.
-> Full data source details are documented in `[06_Data/README_data.md](https://github.com/bhuminagar-analytics/US-Medicaid-Drug-Spend-Intelligence/blob/main/06_Data/README_data.md)`
+> Full data source details are documented in `[06_Data/README_data.md]`
 
 ---
 
