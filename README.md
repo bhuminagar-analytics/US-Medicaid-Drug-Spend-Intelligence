@@ -28,7 +28,7 @@
 
 ![Executive Dashboard](07_PowerBI_Dashboard/screenshots/01_Executive_Dashboard_Overview.png)
 
-> Executive-level Power BI dashboard summarizing Medicaid spending trends, reimbursement models, top drug cost drivers, and state-level spend concentration.
+> Executive Power BI dashboard summarizing Medicaid spending trends, reimbursement models, top drug cost drivers, and state-level spend concentration.
 
 ---
 
