@@ -16,9 +16,11 @@
 | **Project Type** | Healthcare Business Analysis & Business Intelligence |
 | **Stakeholder** | Medicaid Managed Care Organization (MCO) — Payer Analytics Team |
 | **Data Source** | CMS Medicaid State Drug Utilization Data (Medicaid.gov) |
-| **Data Coverage** | 2016–2024 · 17,000+ drug utilization records · 50+ states · MCOU & FFSU |
+| **Data Coverage** | 2016–2025 (2025 partial-year-data) · 17,000+ drug utilization records · 50+ states · MCOU & FFSU |
 | **Tools** | PostgreSQL · Power BI · Lucidchart · MS Word |
 | **Prepared By** | Bhumi Nagar — Business Analyst |
+
+> *(2025 data was processed within the SQL pipeline but excluded from executive trend visualizations due to partial-year reporting.)*
 
 ---
 
@@ -52,7 +54,7 @@ Medicaid managed care organizations face a critical visibility gap: pharmaceutic
 
 **Primary Objectives:**
 
-- Analyze Medicaid drug spending trends across 2016–2024
+- Analyze Medicaid drug spending trends across 2016–2024 (2025 excluded from dashboard trend visualizations due to incomplete reporting period)
 - Identify high-cost drugs contributing disproportionately to total spend
 - Compare reimbursement model efficiency — MCOU vs FFSU
 - Evaluate state-level spending concentration and geographic outliers
@@ -86,19 +88,19 @@ Medicaid managed care organizations face a critical visibility gap: pharmaceutic
 
 ```text
 Business Problem Identification
-        ↓
+           ↓
 Project Charter
-        ↓
+           ↓
 Business Requirements Gathering (BRD)
-        ↓
+           ↓
 Process Mapping & Workflow Analysis (Lucidchart)
-        ↓
+           ↓
 KPI Definition & Governance Framework
-        ↓
+           ↓
 SQL Data Engineering & ETL Pipeline
-        ↓
+           ↓
 Power BI Dashboard Development
-        ↓
+           ↓
 Analytical Insights & Executive Reporting
 ```
 
@@ -107,7 +109,7 @@ Analytical Insights & Executive Reporting
 ## 🏗️ Solution Architecture
 
 ```text
-Raw CSV Files (CMS Medicaid.gov — 2016–2024)
+Raw CSV Files (CMS Medicaid.gov — 2016–2025) (2025 partial-year data)
         ↓
 PostgreSQL — Raw Schema
 raw.medicaid_drug_utilization
@@ -185,7 +187,7 @@ Power BI Semantic Layer
 | 01 | **Cost Concentration** | ~20% of drugs drive ~80% of total Medicaid pharmaceutical spend — classic Pareto 80/20 concentration pattern |
 | 02 | **Spending Growth** | Consistent upward trend 2016–2024 · $1.5T total spend across the period |
 | 03 | **Managed Care Dominance** | ~90%+ of total expenditure flows through Managed Care (MCOU) — structural dependency confirmed |
-| 04 | **Geographic Concentration** | CA, NY, and TX account for disproportionate share of total Medicaid spend |
+| 04 | **Geographic Concentration** | CA, NY, and TX account for a disproportionate share of total Medicaid spend |
 | 05 | **Price-Driven Cost Growth** | Avg cost per prescription = $307 — rising faster than volume, confirming price-driven increases |
 | 06 | **Data Quality** | Suppression rates vary by year, state, and utilization type — documented and managed via SQL logic |
 
@@ -209,7 +211,7 @@ Power BI Semantic Layer
 | Suppressed reimbursement records | Incomplete calculations | Managed via SQL CASE logic — NULLs applied, tracked via suppression KPI views |
 | Invalid geographic labels ('XX') | Distorted state analysis | Excluded from geographic visuals — documented as unclassified jurisdictions |
 | Multi-year data inconsistency | Reporting inconsistency | Standardized through staging views and column normalization |
-| Decimal overflow in Power BI | Import instability | Managed through controlled data type formatting and load sequencing |
+| Large numeric precision handling in Power BI | Import instability | Managed through controlled data type formatting and load sequencing |
 
 ---
 
@@ -235,21 +237,26 @@ Power BI Semantic Layer
 
 ## ⚙️ How to Run the SQL
 
-**Prerequisites:**
+### Prerequisites
 
 - PostgreSQL 13+
 - pgAdmin or any PostgreSQL client
-- CMS Medicaid CSV files (2016–2024) downloaded from Medicaid.gov
+- CMS Medicaid State Drug Utilization CSV files downloaded from Medicaid.gov
 
-**Steps:**
+> Note: The SQL pipeline processes 2016–2025 data.  
+> 2025 was excluded from executive trend visuals due to partial-year reporting.
+
+### Steps
 
 ```sql
--- Step 1: Create raw schema and import yearly CSV files using COPY command
--- Step 2: Run staging clean view — handles suppression logic and XX exclusion
--- Step 3: Run enriched layer — creates 4 derived KPI metrics
--- Step 4: Run all 11 analytics KPI views in sequence
+-- Step 1: Create raw, staging, and analytics schemas
+-- Step 2: Import yearly CMS Medicaid CSV files using the COPY command
+-- Step 3: Create a staging clean view for suppression handling and standardization
+-- Step 4: Create an enriched view with derived KPI metrics
+-- Step 5: Run analytics KPI views for reporting and dashboarding
 
--- Full script: 05_SQL_Data_Engineering/Medicaid_Analysis.sql
+-- Full script:
+-- 05_SQL_Data_Engineering/Medicaid_Analysis.sql
 -- Pipeline overview: 05_SQL_Data_Engineering/SQL_Pipeline_Overview.pdf
 ```
 
@@ -306,13 +313,13 @@ medicaid-drug-spend-intelligence/
 |---|---|
 | **Dataset** | CMS Medicaid State Drug Utilization Data |
 | **Source** | [Medicaid.gov — State Drug Utilization Data](https://www.medicaid.gov/medicaid/prescription-drugs/state-drug-utilization-data/index.html) |
-| **Coverage** | 2016–2024 · 50+ U.S. states + jurisdictions |
+| **Coverage** | 2016–2025 (2025 partial-year-data) · 50+ U.S. states + jurisdictions |
 | **Records** | 17,000+ drug utilization records across 10 yearly files |
 | **Models** | MCOU (Managed Care) · FFSU (Fee-for-Service) |
 
 > Raw data files are not included in this repository.
 > All datasets are publicly available and can be downloaded directly from Medicaid.gov.
-> Full data source details are documented in `06_Data/README_data.md`
+> Full data source details are documented in `[06_Data/README_data.md](https://github.com/bhuminagar-analytics/US-Medicaid-Drug-Spend-Intelligence/blob/main/06_Data/README_data.md)`
 
 ---
 
@@ -330,8 +337,8 @@ medicaid-drug-spend-intelligence/
 
 ## 🔗 Connect
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Bhumi_Nagar-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/bhuminagar)
-[![Portfolio](https://img.shields.io/badge/Notion-Portfolio-000000?style=flat&logo=notion)](https://sulky-peripheral-8e9.notion.site/Medicaid-Drug-Spend-Intelligence-Project-Overview-29e777045f0946078d21fb7151ae8d07)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Bhumi_Nagar-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/bhuminagar/)
+[![Portfolio](https://img.shields.io/badge/Notion-Portfolio-000000?style=flat&logo=notion)](https://sulky-peripheral-8e9.notion.site/Bhumi-Nagar-92e5984d31d8431c9515836eeaaf883e?source=copy_link)
 [![Lucidchart](https://img.shields.io/badge/Lucidchart-Process_Flows-F97924?style=flat&logo=lucidchart)](https://lucid.app/lucidchart/1ee6c84f-65ac-4091-8731-5d99c68a3323/view)
 
 ---
